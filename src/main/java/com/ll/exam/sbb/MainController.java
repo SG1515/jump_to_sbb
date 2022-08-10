@@ -3,18 +3,22 @@ package com.ll.exam.sbb;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 @Controller
 public class MainController {
     private int increaseNo = -1;
+
     @RequestMapping("/sbb")
-    // 아래 함수의 리턴값을 그대로 브라우저에 표시한다.
-    // 아래 함수의 리턴 값을 문자열화 해서 브라우저 응답의 바디에 담는다.
+    // 아래 함수의 리턴값을 그대로 브라우저에 표시
+    // 아래 함수의 리턴값을 문자열화 해서 브라우저 응답의 바디에 담는다.
     @ResponseBody
     public String index() {
-        //서버에서 실행(console)
+        // 서버에서 출력
         System.out.println("Hello");
-        // 먼 미래에 브라우저에서 보여진다.
-        return "배고파3";
+        // 먼 미래에 브라우저에서 보여짐
+        return "안녕하세요.";
     }
 
     @GetMapping("/page1")
@@ -23,8 +27,8 @@ public class MainController {
         return """
                 <form method="POST" action="/page2">
                     <input type="number" name="age" placeholder="나이" />
-                    <input type="submit" value="page2 POST 방식으로 이동" />
-                </form> 
+                    <input type="submit" value="page2로 POST 방식으로 이동" />
+                </form>
                 """;
     }
 
@@ -33,7 +37,7 @@ public class MainController {
     public String showPage2Post(@RequestParam(defaultValue = "0") int age) {
         return """
                 <h1>입력된 나이 : %d</h1>
-                <h2>안녕하세요. POST 방식으로 오셨군요.</h2>            
+                <h1>안녕하세요, POST 방식으로 오셨군요.</h1>
                 """.formatted(age);
     }
 
@@ -48,21 +52,30 @@ public class MainController {
 
     @GetMapping("/plus")
     @ResponseBody
-    public int showPlus(int a, int b){
-        return a+b;
+    public int showPlus(int a, int b) {
+        return a + b;
     }
 
     @GetMapping("/minus")
     @ResponseBody
-    public int showMinus(int a, int b){
-        return a-b;
+    public int showMinus(int a, int b) {
+        return a - b;
     }
 
-    @GetMapping("/increase")
+    @GetMapping("/gugudan")
     @ResponseBody
-    public int showPlus(){
-        increaseNo++;
-        return increaseNo;
-    }
+    public String showGugudan(Integer dan, Integer limit) {
+        if (limit == null) {
+            limit = 9;
+        }
 
+        if (dan == null) {
+            dan = 9;
+        }
+
+        Integer finalDan = dan;
+        return IntStream.rangeClosed(1, limit)
+                .mapToObj(i -> "%d * %d = %d".formatted(finalDan, i, finalDan * i))
+                .collect(Collectors.joining("<br>\n"));
+    }
 }
