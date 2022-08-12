@@ -63,7 +63,9 @@ public class MainController {
 
     @GetMapping("/plus")
     @ResponseBody
-    public int showPlus(int a, int b) { return a + b; }
+    public int showPlus(int a, int b) {
+        return a + b;
+    }
 
     @GetMapping("/plus2")
     @ResponseBody
@@ -76,7 +78,9 @@ public class MainController {
 
     @GetMapping("/minus")
     @ResponseBody
-    public int showMinus(int a, int b) { return a - b; }
+    public int showMinus(int a, int b) {
+        return a - b;
+    }
 
     @GetMapping("/gugudan")
     @ResponseBody
@@ -97,8 +101,8 @@ public class MainController {
 
     @GetMapping("/mbti/{name}")
     @ResponseBody
-    public String mbti(@PathVariable String name) {
-        return switch ( name ) {
+    public String showMbti(@PathVariable String name) {
+        return switch (name) {
             case "홍길순" -> {
                 char j = 'J';
                 yield "INF" + j;
@@ -124,8 +128,6 @@ public class MainController {
     public String getSession(@PathVariable String name, HttpSession session) {
         String value = (String) session.getAttribute(name);
 
-        //req => 쿠기가 있다. => 쿠키안에 JSESSIONID => 세션을 얻을 수 있다.
-
         return "세션변수 %s의 값이 %s 입니다.".formatted(name, value);
     }
 
@@ -137,19 +139,20 @@ public class MainController {
 
     @GetMapping("/addArticle")
     @ResponseBody
-    public String addArticle(String title, String body){
+    public String addArticle(String title, String body) {
         Article article = new Article(title, body);
 
         articles.add(article);
 
         return "%d번 게시물이 생성되었습니다.".formatted(article.getId());
     }
+
     @GetMapping("/article/{id}")
     @ResponseBody
     public Article getArticle(@PathVariable int id) {
         Article article = articles
                 .stream()
-                .filter(a -> a.getId() == id)
+                .filter(a -> a.getId() == id) // 1번
                 .findFirst()
                 .orElse(null);
 
@@ -158,34 +161,34 @@ public class MainController {
 
     @GetMapping("/modifyArticle/{id}")
     @ResponseBody
-    public String modifyArticle(@PathVariable int id, String title, String body){
+    public String modifyArticle(@PathVariable int id, String title, String body) {
         Article article = articles
                 .stream()
                 .filter(a -> a.getId() == id) // 1번
                 .findFirst()
                 .orElse(null);
 
-        if (article ==null) {
+        if (article == null) {
             return "%d번 게시물은 존재하지 않습니다.".formatted(id);
         }
 
         article.setTitle(title);
         article.setBody(body);
 
-        return "%번 게시물을 수정하였습니다.".formatted(article.getId());
+        return "%d번 게시물을 수정하였습니다.".formatted(article.getId());
     }
 
     @GetMapping("/deleteArticle/{id}")
     @ResponseBody
-    public String deleteArticle(@PathVariable int id){
+    public String deleteArticle(@PathVariable int id) {
         Article article = articles
                 .stream()
-                .filter(a -> a.getId() == id)
+                .filter(a -> a.getId() == id) // 1번
                 .findFirst()
                 .orElse(null);
 
-        if(article ==null) {
-            return "%d번 게시물이 존재하지 않습니다.".formatted(id);
+        if (article == null) {
+            return "%d번 게시물은 존재하지 않습니다.".formatted(id);
         }
 
         articles.remove(article);
@@ -195,31 +198,23 @@ public class MainController {
 
     @GetMapping("addPersonOldWay")
     @ResponseBody
-    Person addPersonOldWay(int id, int age, String name){
+    Person addPersonOldWay(int id, int age, String name) {
         Person p = new Person(id, age, name);
 
         return p;
     }
 
-
-    @GetMapping("addPerson")
+    @GetMapping("/addPerson/{id}")
     @ResponseBody
-    Person addPerson(Person p){
+    Person addPerson(Person p) {
         return p;
     }
-
-
 }
-
-
-
-
-
 
 @AllArgsConstructor
 @Getter
 @Setter
-class  Article {
+class Article {
     private static int lastId = 0;
     private int id;
     private String title;
@@ -239,8 +234,8 @@ class Person {
     private int age;
     private String name;
 
-    public Person(int age, String name){
+    public Person(int age, String name) {
         this.age = age;
         this.name = name;
     }
-};
+}

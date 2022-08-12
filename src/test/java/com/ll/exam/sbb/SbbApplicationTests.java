@@ -6,6 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 class SbbApplicationTests {
 	@Autowired
@@ -23,11 +25,13 @@ class SbbApplicationTests {
 		q1.setCreateDate(LocalDateTime.now());
 		questionRepository.save(q1);  // 첫번째 질문 저장
 
-	Question q2 = new Question();
-        q2.setSubject("스프링부트 모델 질문입니다.");
-        q2.setContent("id는 자동으로 생성되나요?");
-        q2.setCreateDate(LocalDateTime.now());
-        questionRepository.save(q2);  // 두번째 질문 저장
-}
+		Question q2 = new Question();
+		q2.setSubject("스프링부트 모델 질문입니다.");
+		q2.setContent("id는 자동으로 생성되나요?");
+		q2.setCreateDate(LocalDateTime.now());
+		questionRepository.save(q2);
 
+		assertThat(q1.getId()).isGreaterThan(0);
+		assertThat(q2.getId()).isGreaterThan(q1.getId());
+	}
 }

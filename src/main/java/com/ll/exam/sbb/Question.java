@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
 @Getter
 @Setter
 @Entity // 아래 Question 클래스는 엔티티 클래스이다.
