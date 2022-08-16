@@ -22,5 +22,4 @@ public interface RepositoryUtil {
     }
 
     void truncate();
-
 }
