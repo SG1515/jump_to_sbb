@@ -1,6 +1,7 @@
 package com.ll.exam.sbb.question;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +25,5 @@ public class QuestionController {
         model.addAttribute("questionList", questionList);
 
         return "question_list";
-    }
-
-    @RequestMapping("/question/list2")
-    @ResponseBody
-    public String list2() {
-        return "하하111777";
     }
 }
