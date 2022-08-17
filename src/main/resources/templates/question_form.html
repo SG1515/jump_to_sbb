@@ -6,11 +6,6 @@
 <div layout:fragment="content" class="container">
     <h5 class="my-3 border-bottom pb-2">질문등록</h5>
 
-    <div class="alert alert-danger" role="alert" th:if="${errorMsg != null}" th:text="${errorMsg}">
-
-    </div>
-
-
     <div class="alert alert-danger" role="alert" th:if="${subjectErrorMsg != null}" th:text="${subjectErrorMsg}"></div>
     <div class="alert alert-danger" role="alert" th:if="${contentErrorMsg != null}" th:text="${contentErrorMsg}"></div>
 

@@ -49,6 +49,7 @@ public class QuestionController {
     public String questionCreate() {
         return "question_form";
     }
+    boolean hasError = false;
 
     @PostMapping("/create")
     public String questionCreate(Model model, QuestionFrom questionFrom) {
