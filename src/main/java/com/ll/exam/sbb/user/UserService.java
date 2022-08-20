@@ -12,6 +12,7 @@ public class UserService {
     private final UserRepository userRepository;
     // 스프링이 책임지고 PasswordEncoder 타입의 객체를 만들어야 하는 상황
     private final PasswordEncoder passwordEncoder;
+
     public SiteUser create(String username, String email, String password) throws SignupUsernameDuplicatedException, SignupEmailDuplicatedException {
         SiteUser user = new SiteUser();
         user.setUsername(username);
@@ -27,7 +28,6 @@ public class UserService {
                 throw new SignupEmailDuplicatedException("이미 사용중인 email 입니다.");
             }
         }
-
 
 
         return user;

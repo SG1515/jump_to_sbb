@@ -28,6 +28,7 @@ public class AnswerController {
             model.addAttribute("question", question);
             return "question_detail";
         }
+
         // 답변 등록 시작
         answerService.create(question, answerForm.getContent());
         // 답변 등록 끝
