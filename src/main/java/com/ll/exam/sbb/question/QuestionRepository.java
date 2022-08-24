@@ -24,4 +24,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long>, Repos
 
     Page<Question> findBySubjectContains(String kw, Pageable pageable);
 
+    Page<Question> findBySubjectContainsOrContentContains(String kw, String kw_, Pageable pageable);
+
+
 }
