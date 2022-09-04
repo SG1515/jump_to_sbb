@@ -23,7 +23,6 @@ public class AnswerService {
         answerRepository.save(answer);
 
         return answer;
-
     }
 
     public Answer getAnswer(Long id) {

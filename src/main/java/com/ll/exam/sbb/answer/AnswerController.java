@@ -1,5 +1,6 @@
 package com.ll.exam.sbb.answer;
 
+import com.ll.exam.sbb.DataNotFoundException;
 import com.ll.exam.sbb.question.Question;
 import com.ll.exam.sbb.question.QuestionService;
 import com.ll.exam.sbb.user.SiteUser;
@@ -27,17 +28,16 @@ public class AnswerController {
     private final AnswerService answerService;
     private final UserService userService;
 
-
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create/{id}")
     public String detail(Principal principal, Model model, @PathVariable long id, @Valid AnswerForm answerForm, BindingResult bindingResult) {
-
         Question question = this.questionService.getQuestion(id);
 
-        if ( bindingResult.hasErrors() ) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("question", question);
             return "question_detail";
         }
+
         SiteUser siteUser = userService.getUser(principal.getName());
 
         // 답변 등록 시작
@@ -51,7 +51,6 @@ public class AnswerController {
     @GetMapping("/modify/{id}")
     public String answerModify(AnswerForm answerForm, @PathVariable("id") Long id, Principal principal) {
         Answer answer = answerService.getAnswer(id);
-
 
         if (!answer.getAuthor().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
